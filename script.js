@@ -1,4 +1,4 @@
-let isSpinning = true;
+let isSpinning = false;
 
 let illo = new Zdog.Illustration({
   element: '.zdog-canvas',
