@@ -1,547 +1,312 @@
-let isSpinning = false;
-
-let illo = new Zdog.Illustration({
-  element: '.zdog-canvas',
-  dragRotate: true, 
-  onDragStart: function() {
-    isSpinning = false;
-  },
+const illo = new Zdog.Illustration({
+  element: ".zdog-canvas",
+  dragRotate: true,
+  zoom: 1.5,
+  rotate: {x:-.07, y:-0.7},
+ 
 });
-new Zdog.Ellipse({
+
+// Initials
+var letters = new Zdog.Group({
+  addTo:illo,
+  visible: true,
+  updateSort: true,
+})
+
+const I = new Zdog.Shape({
+  addTo:letters,
+  path: [
+  {x: -40, y: -40},
+  {x: 40, y: -40},
+  {x: 40, y: -10},
+  {x: 15, y: -10},
+  {x: 15, y: 10},
+  {x: 40, y: 10},
+  {x: 40, y: 40},
+  {x: -40, y: 40},
+  {x: -40, y: 10},
+  {x: -15, y: 10},
+  {x: -15, y: -10},
+  {x: -40, y: -10},  
+  ],      
+  fill: false,
+  color: '#e0481f',
+  translate: {y:-55,z:40},
+  visible: true,
+  stroke: 3,
+  })
+const M = new Zdog.Shape({
+  addTo:letters,
+  path: [
+    {x: -40, y: -40},
+    {x: 00, y: -10},
+    {x: 40, y:-40},
+    {x: 40, y: 40},
+    {x: -40, y:40},
+  ],
+  fill: false,
+  color: '#f6931e',
+  rotate: {y: Zdog.TAU/4},
+  translate: {y:-55,x: 40},
+  visible: true,
+  stroke: 3,
+})
+const D = new Zdog.Shape({
+  addTo:letters,
+  path: [
+  {x: -40, y: -40},
+  {x: 10, y: -40},
+    {arc: [
+      {x :40, y:-40},
+      {x :40, y: -10},
+    ]},
+  {x: 40, y: 10},
+    {arc: [
+      {x :40, y: 40},
+      {x :10, y: 40},
+    ]},
+  {x: -40, y:40},
+  ],
+  rotate: {y: Zdog.TAU/2},
+  translate: {y:-55,z: -40},
+  fill: false,
+  color: '#6a0000',
+  visible: true,
+  stroke: 3,
+  })
+const space = new Zdog.Shape({
+  addTo:letters,
+  path: [
+    {x: -40, y: -40,z:80},
+    {x: 40, y:-40,z:80},
+    {x: 40, y: 40,z:80},
+    {x: -40, y:40,z:80},
+  ],
+  fill: false,
+  color: '#f6931e',
+  rotate: {y: Zdog.TAU/4},
+  translate: {y:-50,x: 40},
+  visible: false,
+})
+
+// RecordPlayerBase
+
+const Player = new Zdog.Group({
   addTo: illo,
-  diameter: 500,
-  stroke: 1,
+  visible: true,
+  updateSort: true,
+})
+
+const left = new Zdog.Shape({
+  addTo: Player,
+  path: [
+    {x:-75, y:0},
+    {x:-75, y:30},
+    {x:75, y:30},
+    {x:75, y:0},
+],
+  fill: true,
+  color: '#6a0000',
+  rotate: {y: Zdog.TAU/4},
+  translate: {x:-100},
+})
+
+const back = new Zdog.Shape({
+  addTo: Player,
+  path: [
+    {x:-100, y:0},
+    {x:-100, y:30},
+    {x:100, y:30},
+    {x:100, y:0},
+],
+  fill: true,
+  color: '#e0481f',
+  translate: {z:-75},
+})
+
+const front = new Zdog.Shape({
+  addTo: Player,
+  path: [
+    {x:-100, y:0},
+    {x:-100, y:30},
+    {x:100, y:30},
+    {x:100, y:0},
+],
+  fill: true,
+  color: '#e0481f',
+  translate: {z:75},
+})
+
+const right = new Zdog.Shape({
+  addTo: Player,
+  path: [
+    {x:-75, y:0},
+    {x:-75, y:30},
+    {x:75, y:30},
+    {x:75, y:0},
+],
+  fill: true,
+  color: '#f6931e',
+  rotate: {y: Zdog.TAU/4},
+  translate: {x:100},
+})
+
+const up = new Zdog.Shape({
+  addTo: Player,
+  path: [
+    {x:-100, y:-75},
+    {x:100, y:-75},
+    {x:100, y:75},
+    {x:-100, y:75},
+],
+  fill: true,
+  color: '#f6931e',
+  rotate: {x: Zdog.TAU/4},
+})
+  
+let down = new Zdog.Shape({
+  addTo: Player,
+  path: [
+    {x:-98, y:-73},
+    {x:-98, y: -73,z:-10},
+    {x:-98, y:-73},
+    {x:98, y:-73},
+    {x:98, y:-73,z:-10},
+    {x:98, y:-73},
+    {x:98, y:73},
+    {x:98, y:73,z:-10},
+    {x:98, y:73},
+    {x:-98, y:73},
+    {x:-98, y:73,z:-10},
+    {x:-98, y:73},
+],
+  fill: true,
+  color: '#6a0000',
+  rotate: {x: Zdog.TAU/4},
+  translate: {y: 30},
+  stroke: 5,
+})
+
+
+
+// Arm
+let armbase = new Zdog.Box({
+  addTo: Player,
+  width: 20,
+  height: 7.5,
+  depth: 20,
+  translate: {x:80, y: -5, z:-50},
+  stroke: 2,
+  color: '#f6931e',
+  topFace: '#e0481f',
+})
+
+new Zdog.Cylinder({
+  addTo: armbase,
+  diameter: 5,
+  length: 10,
+  rotate: {x: Zdog.TAU/4},
+  translate: {y:-10},
+  color: '#f6931e',
+  stroke: 2,
+})
+// NeedleArm
+let arm = new Zdog.Cylinder({
+  addTo: armbase,
+  diameter: 5,
+  length: 40,
+  translate: {y:-15},
+  rotate: {x: -.18, y: .3},
+  color: '#f6931e',
+  stroke: 2,
+})
+
+let pt1 = new Zdog.Cylinder({
+  addTo: arm,
+  diameter: 2.5,
+  length: 75,
+  translate: {z: 25},
+  color: '#f6931e',
+  stroke: 2,  
+})
+
+new Zdog.Box({
+  addTo: pt1,
+  width: 7.5,
+  depth: 15,
+  height: 2.5,
+  stroke: 2,
+  translate: {z:45},
+  rotate: {x:.15},
+  color: '#f6931e',
+  topFace: '#e0481f',
+})
+
+// Record
+const Record = new Zdog.Group({
+  addTo: illo,
+  visible: true,
+  updateSort: true,
+})
+
+const Record1 = new Zdog.Ellipse({
+  addTo: letters,
+  diameter: 125,
+  stroke: 2,
   color: '#000',
   fill: true,
-  translate: {y: 110},
-  rotate: {x: Zdog.TAU/4},  
+  translate: {y: -2},
+  rotate: {x: Zdog.TAU/4},
 })
-new Zdog.Ellipse({
-  addTo: illo,
+
+const Record2 = new Zdog.Ellipse({
+  addTo: letters,
   diameter: 50,
-  stroke: 1,
-  color: '#fff',
+  color: 'white',
   fill: true,
-  translate: {x: -75, y: -50, z: -200},  
+  translate: {y: -3},
+  rotate: {x: Zdog.TAU/4},
 })
-new Zdog.Ellipse({
-  addTo: illo,
-  diameter: 100,
-  width: 50,
-  quarters: 2,
-  closed: true,
-  stroke: 5,
-  color: '#971',
+
+const Record3 = new Zdog.Ellipse({
+  addTo: letters,
+  diameter: 10,
+  color: 'black',
   fill: true,
-  translate: {x: -25, y: -30, z: -180},
-  rotate: {z: Zdog.TAU/-4},  
+  translate: {y: -4.15},
+  rotate: {x: Zdog.TAU/4},
+
 })
+
 new Zdog.Ellipse({
-  addTo: illo,
+  addTo: letters,
   diameter: 75,
-  width: 75,
-  quarters: 2,
-  closed: true,
-  stroke: 5,
-  color: '#971',
-  fill: true,
-  translate: {x: -10, y: -30, z: -180},
-  rotate: {z: Zdog.TAU/-4},  
-})
+  quarters: 1,
+  stroke: 1,
+  color: 'white',
+  translate: {y: -3},
+  rotate: {x: Zdog.TAU/4}
+});
+
 new Zdog.Ellipse({
-  addTo: illo,
-  diameter: 100,
-  width: 50,
-  quarters: 2,
-  closed: true,
-  stroke: 5,
-  color: '#971',
-  fill: true,
-  translate: {x: -0, y: -30, z: -180},
-  rotate: {z: Zdog.TAU/-4},  
-})
-new Zdog.Ellipse({
-  addTo: illo,
-  diameter: 100,
-  width: 25,
-  quarters: 2,
-  closed: true,
-  stroke: 5,
-  color: '#971',
-  fill: true,
-  translate: {x: -150, y: -10, z: -180},
-  rotate: {z: Zdog.TAU/-4},  
-})
-new Zdog.Ellipse({
-  addTo: illo,
-  diameter: 50,
-  width: 40,
-  quarters: 2,
-  closed: true,
-  stroke: 5,
-  color: '#971',
-  fill: true,
-  translate: {x: -130, y: -15, z: -180},
-  rotate: {z: Zdog.TAU/-4},  
-})
-new Zdog.Box({
-  addTo: illo,
-  width: 50,
-  height: 110,
-  depth: 50,
-  stroke: false,
-  color: '#CCC',
-  leftFace: '#CCC',
-  rightFace: '#CCC',
-  topFace: '#CCC',
-  bottomFace: '#CCC',
-  translate: {x: -75, y: 45, z: 50}, 
-  rotate: { x: Zdog.TAU/1}
+  addTo: letters,
+  diameter: 75,
+  quarters: 1,
+  stroke: 1,
+  color: 'white',
+  translate: {y: -3},
+  rotate: {x: Zdog.TAU/4, z: 3}
 });
-new Zdog.Box({
-  addTo: illo,
-  width: 5,
-  height: 10,
-  stroke: 2,
-  color: '#fff',
-  translate: {x: -90, y: 50, z: 76}, 
-  rotate: { x: Zdog.TAU/1} 
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 5,
-  height: 10,
-  stroke: 2,
-  color: '#fff',
-  translate: {x: -75, y: 50, z: 76}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 5,
-  height: 10,
-  stroke: 2,
-  color: '#fff',
-  translate: {x: -60, y: 50, z: 76}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 5,
-  height: 10,
-  stroke: 2,
-  color: '#fff',
-  translate: {x: -90, y: 70, z: 76}, 
-  rotate: { x: Zdog.TAU/1} 
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 5,
-  height: 10,
-  stroke: 2,
-  color: '#fff',
-  translate: {x: -75, y: 70, z: 76}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 5,
-  height: 10,
-  stroke: 2,
-  color: '#fff',
-  translate: {x: -60, y: 70, z: 76}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 5,
-  height: 10,
-  stroke: 2,
-  color: '#fff',
-  translate: {x: -90, y: 30, z: 76}, 
-  rotate: { x: Zdog.TAU/1} 
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 5,
-  height: 10,
-  stroke: 2,
-  color: '#fff',
-  translate: {x: -75, y: 30, z: 76}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 5,
-  height: 10,
-  stroke: 2,
-  color: '#fff',
-  translate: {x: -60, y: 30, z: 76}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 5,
-  height: 10,
-  stroke: 2,
-  color: '#fff',
-  translate: {x: -90, y: 10, z: 76}, 
-  rotate: { x: Zdog.TAU/1} 
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 5,
-  height: 10,
-  stroke: 2,
-  color: '#fff',
-  translate: {x: -75, y: 10, z: 76}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 5,
-  height: 10,
-  stroke: 2,
-  color: '#fff',
-  translate: {x: -60, y: 10, z: 76}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 50,
-  height: 100,
-  depth: 50,
-  stroke: false,
-  color: '#CCC',
-  leftFace: '#CCC',
-  rightFace: '#CCC',
-  topFace: '#CCC',
-  bottomFace: '#CCC',
-  translate: {x: 0, y: 50, z: 100}, 
-  
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 50,
-  height: 170,
-  depth: 50,
-  stroke: false,
-  color: '#CCC',
-  leftFace: '#CCC',
-  rightFace: '#CCC',
-  topFace: '#CCC',
-  bottomFace: '#CCC',
-  translate: {x: 75, y: 15, z: -25}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 50,
-  height: 20,
-  depth: 50,
-  stroke: false,
-  color: '#CCC',
-  leftFace: '#CCC',
-  rightFace: '#CCC',
-  topFace: '#CCC',
-  bottomFace: '#CCC',
-  translate: {x: 50, y: 10, z: -25}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 100,
-  height: 20,
-  depth: 50,
-  stroke: false,
-  color: '#CCC',
-  leftFace: '#CCC',
-  rightFace: '#CCC',
-  topFace: '#CCC',
-  bottomFace: '#CCC',
-  translate: {x: 25, y: 90, z: 100}, 
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 150,
-  height: 50,
-  depth: 100,
-  stroke: false,
-  color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: -50, y: 75, z: -120}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 50,
-  height: 20,
-  depth: 100,
-  stroke: false,
-  color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: -100, y: 40, z: -120}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 10,
-  height: 20,
-  depth: 10,
-  stroke: false,
-  color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: -0, y: 40, z: -100}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 40,
-  height: 120,
-  depth: 50,
-  stroke: false,
-  color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: -130, y: 40, z: 100}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 20,
-  height: 20,
-  depth: 20,
-  stroke: false,
-  color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: -130, y: -20, z: 100}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 1,
-  height: 25,
-  depth: 1,
-  stroke: false,
-  color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: -130, y: -40, z: 100}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 40,
-  height: 60,
-  depth: 100,
-  stroke: false,
-  color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: -130, y: 70, z: 75}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 150,
-  height: 20,
-  depth: 40,
-  stroke: false,
- color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: -100, y: 90, z: -20}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 100,
-  height: 20,
-  depth: 40,
-  stroke: false,
- color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: -125, y: 70, z: -20}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 1,
-  height: 10,
-  depth: 1,
-  stroke: false,
- color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: -160, y: 60, z: -20}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 50,
-  height: 80,
-  depth: 100,
-  stroke: false,
-  color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: 25, y: 60, z: 0}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 80,
-  height: 130,
-  depth: 50,
-  stroke: false,
-  color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: 100, y: 35, z: -100}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 20,
-  height: 10,
-  depth: 20,
-  stroke: false,
-  color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: 125, y: -30, z: -90}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 30,
-  height: 50,
-  depth: 100,
-  stroke: false,
-  color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: 125, y: 75, z: -25}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 30,
-  height: 100,
-  depth: 30,
-  stroke: false,
-  color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: 175, y: 50, z: 10}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 80,
-  height: 20,
-  depth: 50,
-  stroke: false,
-  color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: 150, y: 90, z: 100}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 50,
-  height: 10,
-  depth: 25,
-  stroke: false,
-  color: '#999',
-  leftFace: '#999',
-  rightFace: '#999',
-  topFace: '#999',
-  bottomFace: '#999',
-  translate: {x: 150, y: 80, z: 100}, 
-  rotate: { x: Zdog.TAU/1}
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 50,
-  height: 10,
-  depth: 100,
-  stroke: false,
-  color: '#CCC',
-  leftFace: '#CCC',
-  rightFace: '#CCC',
-  topFace: '#CCC',
-  bottomFace: '#CCC',
-  translate: {x: 0, y: 95, z: 190}, 
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 80,
-  height: 10,
-  depth: 50,
-  stroke: false,
-  color: '#CCC',
-  leftFace: '#CCC',
-  rightFace: '#CCC',
-  topFace: '#CCC',
-  bottomFace: '#CCC',
-  translate: {x: 25, y: 95, z: 165}, 
-});
-new Zdog.Box({
-  addTo: illo,
-  width: 20,
-  height: 10,
-  depth: 50,
-  stroke: false,
-  color: '#CCC',
-  leftFace: '#CCC',
-  rightFace: '#CCC',
-  topFace: '#CCC',
-  bottomFace: '#CCC',
-  translate: {x: 0, y: 90, z: 190}, 
-  
-});
+
+
 function animate() {
-  illo.rotate.y += isSpinning ? 0.01 : 0;
   illo.updateRenderGraph();
-  requestAnimationFrame( animate );
+  letters.rotate.y += 0.01;
+  requestAnimationFrame(animate);
+}
+function animateLetters(){
+  letters.rotate.y += 0.01;
+  letters.updateRenderGraph()
+  requestAnimationFrame(animateLetters)
 }
 animate();
