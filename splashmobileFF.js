@@ -6,15 +6,15 @@ const illo2 = new Zdog.Illustration({
 });
 
 // Initials
-var letters = new Zdog.Group({
+var letters2 = new Zdog.Group({
   addTo:illo2,
   visible: true,
   updateSort: true,
   translate: {y:55},
 })
 
-const I = new Zdog.Shape({
-  addTo:letters,
+const I2 = new Zdog.Shape({
+  addTo:letters2,
   path: [
   {x: -40, y: -40},
   {x: 40, y: -40},
@@ -35,8 +35,8 @@ const I = new Zdog.Shape({
   visible: true,
   stroke: 3,
   })
-const M = new Zdog.Shape({
-  addTo:letters,
+const M2 = new Zdog.Shape({
+  addTo:letters2,
   path: [
     {x: -40, y: -40},
     {x: 00, y: -10},
@@ -51,8 +51,8 @@ const M = new Zdog.Shape({
   visible: true,
   stroke: 3,
 })
-const D = new Zdog.Shape({
-  addTo:letters,
+const D2 = new Zdog.Shape({
+  addTo:letters2,
   path: [
   {x: -40, y: -40},
   {x: 10, y: -40},
@@ -75,7 +75,7 @@ const D = new Zdog.Shape({
   stroke: 3,
   })
 const space = new Zdog.Shape({
-  addTo:letters,
+  addTo:letters2,
   path: [
     {x: -40, y: -40,z:80},
     {x: 40, y:-40,z:80},
@@ -91,6 +91,6 @@ const space = new Zdog.Shape({
 
 function animate() {
   illo2.updateRenderGraph();
-  letters.rotate.y += 0.01;
+  letters2.rotate.y += 0.01;
   requestAnimationFrame(animate);
 }
