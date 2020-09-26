@@ -1,4 +1,4 @@
-const illo = new Zdog.Illustration({
+const illo2 = new Zdog.Illustration({
   element: ".zdog-canvas",
   dragRotate: true,
   zoom: .75,
@@ -7,7 +7,7 @@ const illo = new Zdog.Illustration({
 
 // Initials
 var letters = new Zdog.Group({
-  addTo:illo,
+  addTo:illo2,
   visible: true,
   updateSort: true,
   translate: {y:55},
@@ -90,18 +90,7 @@ const space = new Zdog.Shape({
 })
 
 function animate() {
-  illo.updateRenderGraph();
+  illo2.updateRenderGraph();
   letters.rotate.y += 0.01;
   requestAnimationFrame(animate);
 }
-function animateLetters(){
-  letters.rotate.y += 0.01;
-  letters.updateRenderGraph()
-  requestAnimationFrame(animateLetters)
-}
-function animateSpeaker1(){
-  Speaker1.rotate.y += 0.01;
-  Speaker1.updateRenderGraph()
-  requestAnimationFrame(animateSpeaker1)
-}
-animate();
