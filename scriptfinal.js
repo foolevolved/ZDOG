@@ -2,7 +2,7 @@ const illo = new Zdog.Illustration({
   element: ".zdog-canvas",
   dragRotate: true,
   zoom: 1.5,
-  rotate: {x:-.07, y:-0.7},
+  rotate: {x:-.125, y:-0},
  
 });
 
@@ -109,6 +109,7 @@ const left = new Zdog.Shape({
   color: '#6a0000',
   rotate: {y: Zdog.TAU/4},
   translate: {x:-100},
+  stroke:3,
 })
 
 const back = new Zdog.Shape({
@@ -122,6 +123,7 @@ const back = new Zdog.Shape({
   fill: true,
   color: '#e0481f',
   translate: {z:-75},
+  stroke:3,
 })
 
 const front = new Zdog.Shape({
@@ -135,6 +137,7 @@ const front = new Zdog.Shape({
   fill: true,
   color: '#e0481f',
   translate: {z:75},
+  stroke:3,
 })
 
 const right = new Zdog.Shape({
@@ -149,6 +152,7 @@ const right = new Zdog.Shape({
   color: '#f6931e',
   rotate: {y: Zdog.TAU/4},
   translate: {x:100},
+  stroke:3,
 })
 
 const up = new Zdog.Shape({
@@ -162,9 +166,10 @@ const up = new Zdog.Shape({
   fill: true,
   color: '#f6931e',
   rotate: {x: Zdog.TAU/4},
+  stroke:3,
 })
   
-let down = new Zdog.Shape({
+const down = new Zdog.Shape({
   addTo: Player,
   path: [
     {x:-98, y:-73},
@@ -187,18 +192,32 @@ let down = new Zdog.Shape({
   stroke: 5,
 })
 
+const button = new Zdog.Box({
+  addTo:up,
+  height: 5,
+  depth: 15,
+  width: 15,
+  color: '#e0481f',
+  translate: {x:-80,y:0,z:3},
+  rotate: {x: Zdog.TAU/4},
+  bottomFace: '#f6931e',
+  stroke:3,
+})
+
 
 
 // Arm
+
 let armbase = new Zdog.Box({
-  addTo: Player,
+  addTo: up,
   width: 20,
   height: 7.5,
   depth: 20,
-  translate: {x:80, y: -5, z:-50},
-  stroke: 2,
+  translate: {x:80, y: -55, z:5},
+  stroke:3,
   color: '#f6931e',
   topFace: '#e0481f',
+  rotate: {x: Zdog.TAU/-4,y:-.005},
 })
 
 new Zdog.Cylinder({
@@ -207,18 +226,20 @@ new Zdog.Cylinder({
   length: 10,
   rotate: {x: Zdog.TAU/4},
   translate: {y:-10},
-  color: '#f6931e',
-  stroke: 2,
+  color: '#e0481f',
+  stroke: 3,
 })
+
 // NeedleArm
+
 let arm = new Zdog.Cylinder({
   addTo: armbase,
   diameter: 5,
   length: 40,
   translate: {y:-15},
   rotate: {x: -.18, y: .3},
-  color: '#f6931e',
-  stroke: 2,
+  color: '#e0481f',
+  stroke: 3,
 })
 
 let pt1 = new Zdog.Cylinder({
@@ -226,8 +247,8 @@ let pt1 = new Zdog.Cylinder({
   diameter: 2.5,
   length: 75,
   translate: {z: 25},
-  color: '#f6931e',
-  stroke: 2,  
+  color: '#e0481f',
+  stroke: 3,  
 })
 
 new Zdog.Box({
@@ -235,7 +256,7 @@ new Zdog.Box({
   width: 7.5,
   depth: 15,
   height: 2.5,
-  stroke: 2,
+  stroke: 3,
   translate: {z:45},
   rotate: {x:.15},
   color: '#f6931e',
@@ -243,38 +264,31 @@ new Zdog.Box({
 })
 
 // Record
-const Record = new Zdog.Group({
-  addTo: illo,
-  visible: true,
-  updateSort: true,
-})
 
 const Record1 = new Zdog.Ellipse({
-  addTo: letters,
+  addTo: up,
   diameter: 125,
-  stroke: 2,
+  stroke: 3,
   color: '#000',
   fill: true,
-  translate: {y: -2},
-  rotate: {x: Zdog.TAU/4},
+  translate: {z: 1},
 })
 
 const Record2 = new Zdog.Ellipse({
-  addTo: letters,
+  addTo: up,
   diameter: 50,
   color: 'white',
   fill: true,
-  translate: {y: -3},
-  rotate: {x: Zdog.TAU/4},
+  translate: {z: 1.5},
 })
 
 const Record3 = new Zdog.Ellipse({
-  addTo: letters,
+  addTo: up,
   diameter: 10,
   color: 'black',
   fill: true,
-  translate: {y: -4.15},
-  rotate: {x: Zdog.TAU/4},
+  translate: {z: 1.75},
+
 
 })
 
@@ -284,7 +298,7 @@ new Zdog.Ellipse({
   quarters: 1,
   stroke: 1,
   color: 'white',
-  translate: {y: -3},
+  translate: {y: -2},
   rotate: {x: Zdog.TAU/4}
 });
 
@@ -294,19 +308,149 @@ new Zdog.Ellipse({
   quarters: 1,
   stroke: 1,
   color: 'white',
-  translate: {y: -3},
+  translate: {y: -2},
   rotate: {x: Zdog.TAU/4, z: 3}
 });
 
+// Speakers
+var Speaker1 = new Zdog.Group({
+  addTo:illo,
+  visible: true,
+  updateSort: true,
+})
+
+const speaker = new Zdog.Box({
+  addTo:Speaker1,
+  height: 150,
+  depth: 75,
+  width: 75,
+  translate: {x:-100,z:-150,y:-34},
+  color: '#f6931e',
+  leftFace: '#6a0000',
+  frontFace: '#6a0000',
+  rightFace: '#f6931e',
+  rearFace: '#e0481f',
+  bottomFace: '#6a0000',
+  stroke:3,
+  
+})
+
+new Zdog.Ellipse({
+  addTo: speaker,
+  diameter:55,
+  translate: {z:42,y:35},
+  stroke: 3,
+  fill: true,
+  color: 'black',
+  
+})
+
+new Zdog.Hemisphere({
+  addTo: speaker,
+  diameter:5,
+  translate: {z:42,y:35},
+  stroke: 3,
+  fill: true,
+  color: '#6a0000',
+  
+})
+
+new Zdog.Ellipse({
+  addTo: speaker,
+  diameter:55,
+  translate: {z:42,y:-35},
+  stroke: 3,
+  fill: true,
+  color: 'black',
+  
+})
+
+new Zdog.Hemisphere({
+  addTo: speaker,
+  diameter:5,
+  translate: {z:42,y:-35},
+  stroke: 3,
+  fill: true,
+  color: '#6a0000',
+  
+})
+
+var Speaker2 = new Zdog.Group({
+  addTo:illo,
+  visible: true,
+  updateSort: true,
+})
+
+const speaker2 = new Zdog.Box({
+  addTo:Speaker2,
+  height: 150,
+  depth: 75,
+  width: 75,
+  translate: {x:100,z:-150,y:-34},
+  color: '#f6931e',
+  leftFace: '#6a0000',
+  frontFace: '#6a0000',
+  rightFace: '#f6931e',
+  rearFace: '#e0481f',
+  bottomFace: '#6a0000',
+  stroke:3,
+  
+})
+
+new Zdog.Ellipse({
+  addTo: speaker2,
+  diameter:55,
+  translate: {z:42,y:35},
+  stroke: 3,
+  fill: true,
+  color: 'black',
+  
+})
+
+new Zdog.Hemisphere({
+  addTo: speaker2,
+  diameter:5,
+  translate: {z:42,y:35},
+  stroke: 3,
+  fill: true,
+  color: '#6a0000',
+  
+})
+
+new Zdog.Ellipse({
+  addTo: speaker2,
+  diameter:55,
+  translate: {z:42,y:-35},
+  stroke: 3,
+  fill: true,
+  color: 'black',
+  
+})
+
+new Zdog.Hemisphere({
+  addTo: speaker2,
+  diameter:5,
+  translate: {z:42,y:-35},
+  stroke: 3,
+  fill: true,
+  color: '#6a0000',
+  
+})
 
 function animate() {
   illo.updateRenderGraph();
   letters.rotate.y += 0.01;
+  Speaker1.bounce += 20;
   requestAnimationFrame(animate);
 }
 function animateLetters(){
   letters.rotate.y += 0.01;
   letters.updateRenderGraph()
   requestAnimationFrame(animateLetters)
+}
+function animateSpeaker1(){
+  Speaker1.rotate.y += 0.01;
+  Speaker1.updateRenderGraph()
+  requestAnimationFrame(animateSpeaker1)
 }
 animate();
