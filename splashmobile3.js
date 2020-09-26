@@ -1,7 +1,7 @@
 const illo = new Zdog.Illustration({
   element: ".zdog-canvas",
   dragRotate: true,
-  zoom: 1,
+  zoom: 2,
   rotate: {x:-.125, y:-0},
  
 });
