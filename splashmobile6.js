@@ -1,4 +1,4 @@
-const illo = new Zdog.Illustration({
+construct illo = new Zdog.Illustration({
   element: ".zdog-canvas",
   dragRotate: true,
   zoom: .75,
