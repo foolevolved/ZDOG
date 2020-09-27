@@ -13,7 +13,7 @@ var letters2 = new Zdog.Group({
   translate: {y:55},
 })
 
-const I = new Zdog.Shape({
+const I2 = new Zdog.Shape({
   addTo:letters2,
   path: [
   {x: -40, y: -40},
@@ -35,7 +35,7 @@ const I = new Zdog.Shape({
   visible: true,
   stroke: 3,
   })
-const M = new Zdog.Shape({
+const M2 = new Zdog.Shape({
   addTo:letters2,
   path: [
     {x: -40, y: -40},
@@ -51,7 +51,7 @@ const M = new Zdog.Shape({
   visible: true,
   stroke: 3,
 })
-const D = new Zdog.Shape({
+const D2 = new Zdog.Shape({
   addTo:letters2,
   path: [
   {x: -40, y: -40},
